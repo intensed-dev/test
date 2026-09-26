@@ -1,0 +1,1 @@
+<script>const heading = title;</script><template><article class="card"><h2>{heading}</h2><slot></slot></article></template><style>.card{padding:20px;border:1px solid #303640;border-radius:16px;background:#15191f}.card h2{margin-top:0}</style>

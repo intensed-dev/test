@@ -1,0 +1,10 @@
+import fs from "node:fs";
+import path from "node:path";
+import { compileFile } from "../../code/packages/compiler/src/compiler.js";
+const base = new URL("../", import.meta.url).pathname;
+const src = file => path.join(base, file);
+const dist = file => path.join(base, "dist", file);
+fs.rmSync(src("dist"), {recursive:true, force:true});
+for (const file of ["main.rebase","components/Card.rebase","components/Feature.rebase"]) compileFile(src("src/"+file), dist(file.replace(".rebase",".js")));
+fs.copyFileSync(src("index.html"), src("dist/index.html"));
+fs.copyFileSync(src("src/bootstrap.js"), src("dist/bootstrap.js"));

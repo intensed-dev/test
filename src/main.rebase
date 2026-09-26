@@ -1,0 +1,26 @@
+<script>
+import Card from "./components/Card.rebase";
+import Feature from "./components/Feature.rebase";
+import { state, computed, effect, watch } from "rebase";
+const title = "Rebase Feature Lab";
+const features = [
+  { name: "state()", detail: "Reactive state containers" },
+  { name: "computed()", detail: "Derived reactive values" },
+  { name: "watch()", detail: "Observe changes" },
+  { name: "effect()", detail: "Run reactive effects" },
+  { name: "{#if}", detail: "Conditional blocks" },
+  { name: "{#each}", detail: "List rendering" },
+  { name: "on:*", detail: "DOM event handlers" },
+  { name: ".rebase", detail: "Reusable components" },
+  { name: "createRouter()", detail: "Built-in routing" }
+];
+const status = state("Ready");
+const doubled = computed(() => features.length * 2, []);
+const effectRuns = state(0);
+const lastChange = state("none");
+function activate() { status.value = status.value === "Ready" ? "Activated" : "Ready"; }
+effect(() => { effectRuns.value = effectRuns.value + 1; }, [status]);
+watch(status, (next, previous) => { lastChange.value = previous + " -> " + next; });
+</script>
+<template><main class="page"><header><p class="eyebrow">Rebase 0.3 feature lab</p><h1>{title}</h1><p>Every section below is authored as a <code>.rebase</code> component.</p></header><Card title="Interactive state"><p>Status: {status}</p><p>Computed: {doubled}</p><p>Effects: {effectRuns} | Last change: {lastChange}</p><button on:click={activate}>toggle state</button><p>{#if features.length > 5}The feature set is loaded.{:else}Loading…{/if}</p></Card><section class="grid">{#each features as feature, index}<Feature index="{index}" name="{feature.name}" detail="{feature.detail}" />{/each}</section></main></template>
+<style>.page{max-width:980px;margin:auto;padding:48px 24px}.eyebrow{font-family:ui-monospace,monospace;text-transform:uppercase;letter-spacing:.08em;opacity:.65}h1{font-size:clamp(2.4rem,7vw,5rem);line-height:1;margin:.2em 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}code{font-family:ui-monospace,monospace}</style>
