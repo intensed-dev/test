@@ -1,0 +1,1 @@
+<script>const label = name;</script><template><article class="feature"><small>#{index}</small><h2>{label}</h2><p>{detail}</p></article></template><style>.feature{padding:18px;border:1px solid #303640;border-radius:14px}.feature small{opacity:.55;font-family:ui-monospace,monospace}.feature h2{margin:.5rem 0}.feature p{margin:0;opacity:.72}</style>
